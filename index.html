@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <link href="res/style.css" rel="stylesheet" type="text/css" />
+    <meta charset="UTF-8">
+    <title>audioPage</title>
+</head>
+    
+<body>
+    <div id="fileSelect">
+        <h1>Choose a word list to begin with&nbsp;&nbsp;: )</h1>
+        <input type="file" id="file" style="display:none" onchange="fileImport();" accept=".txt">
+        <div class="div-circle" onclick="document.getElementById('file').click()">
+            <img id="fImportIcon" src="res/svg/fileImport.svg" height="35px" />
+        </div>
+    </div>
+
+    <div id="wordList" style="display: none">
+        <div class="pannelHead">
+            <div class="pannel">
+                Repeat&nbsp;
+                <input type="text" class="numInput" id="rptTimes" value="2" />
+                &nbsp;times,&nbsp;
+                Delay
+                <input type="text" class="numInput" id="delay" value="0.8" />
+            </div>
+            <div class="pannel">
+                From word&nbsp;
+                <input type="text" class="numInput" id="begin" value="1" />
+                &nbsp;to&nbsp;
+                <input type="text" class="numInput" id="end" value="100" />
+                &nbsp;&nbsp;
+                <a id="start" onclick="initWordList()">Start</a>            
+            </div>
+        </div>    
+            
+        <div id="wordContainer">
+        </div>
+    </div>
+    <div class="div-circle" id="stopButton" style="display: none">
+        <div id="stopDiv">&nbsp;</div>
+    </div>
+    
+    <template id="wordRow">
+        <div class="word">
+            <span class="wordText">Analysis</span>
+            <audio></audio>
+            <span class="buttons">
+                <img class="Button play" src="res/svg/playButton.svg" height="20px" />
+                <img class="Button loop" src="res/svg/loopButton.svg" height="20px" />
+                <img class="Button down" src="res/svg/downButton.svg" height="23px" />
+            </span>
+        </div>
+    </template>
+    
+    <script src="res/audioPage.js"></script>
+</body>
+                                  
+</html>
