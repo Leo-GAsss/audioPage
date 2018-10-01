@@ -10,8 +10,8 @@
 <body>
     <div id="fileSelect">
         <h1>Choose a word list to begin with&nbsp;&nbsp;: )</h1>
-        <input type="file" id="file" style="display:none" onchange="fileImport();" accept=".txt">
-        <div class="div-circle" onclick="document.getElementById('file').click()">
+        <input type="file" id="file" style="display:none" accept=".txt">
+        <div class="div-circle" id="fImportBtn">
             <img id="fImportIcon" src="res/svg/fileImport.svg" height="35px" />
         </div>
     </div>
@@ -31,7 +31,7 @@
                 &nbsp;to&nbsp;
                 <input type="text" class="numInput" id="end" value="100" />
                 &nbsp;&nbsp;
-                <a id="start" onclick="initWordList()">Start</a>            
+                <a id="start">Start</a>            
             </div>
         </div>    
             
