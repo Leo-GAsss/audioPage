@@ -1,8 +1,10 @@
 /*eslint-env browser*/
 var wordL=[];
-var globalPlayFlag=true;
-var nowPlay=null;
-var Position = {};
+var stopFlag=true;
+var playFlag=true;
+var nowPlay;
+var Position={};
+
 (function () {
     Position.getAbsolute = function (reference, target) {
         var result = {
@@ -37,18 +39,23 @@ var Position = {};
 })();
 
 function scrollWord(elem) {
-    rect=elem.getBoundingClientRect();
-    absoluteElementTop=rect.top+window.pageYOffset;
+    var rect=elem.getBoundingClientRect();
+    var absoluteElementTop=rect.top+window.pageYOffset;
     window.scrollTo(0,absoluteElementTop-8-41*3);
 }
 
 function loopAudioPlay(elem,maxTimes,delayTime,finalEndEvent){
+    if(!playFlag) {
+        return ;
+    }
+    playFlag=false;
     elem.play();
     var start = 0;
     elem.addEventListener("ended",function() {
-        if(!globalPlayFlag) {
+        if(!stopFlag) {
             elem.parentElement.className="word";
-            globalPlayFlag=true;
+            stopFlag=true;
+            playFlag=true;
             return;
         }
         start++;
@@ -58,34 +65,37 @@ function loopAudioPlay(elem,maxTimes,delayTime,finalEndEvent){
         else {
             elem.pause();
             elem.onended=null;
-            if(finalEndEvent)
+            playFlag=true;
+            if(finalEndEvent) {
                 finalEndEvent(elem);
+            }
         }
     });
 }
 
 function playOnce(id) {
-    document.getElementById("Audio"+id.slice(4)).play();
+    var tgtAudio=document.getElementById("Audio"+id.slice(4));
+    loopAudioPlay(tgtAudio,1,0,null);
 }
 
 function playLoop(id) {
-    let tgtAudio=document.getElementById("Audio"+id.slice(4));
-    let delay=Number(document.getElementById("delay").value);
-    times=Number(document.getElementById("rptTimes").value);
+    var tgtAudio=document.getElementById("Audio"+id.slice(4));
+    var delay=Number(document.getElementById("delay").value);
+    var times=Number(document.getElementById("rptTimes").value);
     loopAudioPlay(tgtAudio,times,tgtAudio.duration*1000*delay,null);
 }
 
 function autoContinue(curElem) {
-    if(!globalPlayFlag) {
+    if(!stopFlag) {
         curElem.parentElement.className="word";
-        globalPlayFlag=true;
+        stopFlag=true;
         return;
     }
     
-    let nextAudio=document.getElementById("Audio"+String(Number(curElem.id.slice(5))+1));
-    let delay=Number(document.getElementById("delay").value);
-    let wordContainer=document.getElementById("wordContainer").children;
-    times=Number(document.getElementById("rptTimes").value);
+    var nextAudio=document.getElementById("Audio"+String(Number(curElem.id.slice(5))+1));
+    var delay=Number(document.getElementById("delay").value);
+    var wordContainer=document.getElementById("wordContainer").children;
+    var times=Number(document.getElementById("rptTimes").value);
     if(nextAudio.parentElement!=wordContainer[wordContainer.length-1]) {
         setTimeout(
             function() {
@@ -104,21 +114,25 @@ function autoContinue(curElem) {
 }
 
 function autoStart(id) {
+    if(!playFlag) {
+        return ;
+    }
     id=id.slice(4);
-    let tgtAudio=document.getElementById("Audio"+id);
-    let delay=Number(document.getElementById("delay").value);
-    let wordContainer=document.getElementById("wordContainer").children;
-    times=Number(document.getElementById("rptTimes").value);
+    var tgtAudio=document.getElementById("Audio"+id);
+    var delay=Number(document.getElementById("delay").value);
+    var wordContainer=document.getElementById("wordContainer").children;
+    var times=Number(document.getElementById("rptTimes").value);
     scrollWord(tgtAudio.parentElement);
     tgtAudio.parentElement.className="word js-item-hover";
     nowPlay=tgtAudio.parentElement;
     if(tgtAudio.parentElement!=wordContainer[wordContainer.length-1]) {
-        stopBtn=document.getElementById("stopButton");
+        var stopBtn=document.getElementById("stopButton");
         stopBtn.style.display="";
         stopBtn.addEventListener("click",function() {
-            globalPlayFlag=false;
+            stopFlag=false;
             this.style.display="none";
         });
+        
         loopAudioPlay(tgtAudio,times,tgtAudio.duration*1000*delay,autoContinue);
     }
     else {
@@ -127,34 +141,34 @@ function autoStart(id) {
 }
 
 function initWordList() {
-    let wordCont=document.getElementById("wordContainer");
-    let cNodes=wordCont.childNodes;
-    for(i=cNodes.length-1;i>=0;i--) {
+    var wordCont=document.getElementById("wordContainer");
+    var cNodes=wordCont.childNodes;
+    for(var i=cNodes.length-1;i>=0;i--) {
         wordCont.removeChild(cNodes[i]);
     }
     
-    let begin=document.getElementById("begin").value;
-    let end=document.getElementById("end").value;
+    var begin=document.getElementById("begin").value;
+    var end=document.getElementById("end").value;
     for(i=begin-1;i<end;i++) {
-        let wordT=document.querySelector("#wordRow");
+        var wordT=document.querySelector("#wordRow");
         
-        wordText=wordT.content.querySelector(".wordText");
+        var wordText=wordT.content.querySelector(".wordText");
         wordText.innerHTML=wordL[i].slice(0,1).toUpperCase()+wordL[i].slice(1);
         
-        wordAudio=wordT.content.querySelector("audio");
+        var wordAudio=wordT.content.querySelector("audio");
         wordAudio.id="Audio"+i.toString();
         wordAudio.src="http://dict.youdao.com/dictvoice?audio="+wordL[i];
         
-        buttonPlay=wordT.content.querySelector(".Button.play");
+        var buttonPlay=wordT.content.querySelector(".Button.play");
         buttonPlay.id="Play"+i.toString();
             
-        buttonLoop=wordT.content.querySelector(".Button.loop");
+        var buttonLoop=wordT.content.querySelector(".Button.loop");
         buttonLoop.id="Loop"+i.toString();
         
-        buttonDown=wordT.content.querySelector(".Button.down")
+        var buttonDown=wordT.content.querySelector(".Button.down")
         buttonDown.id="Down"+i.toString();
         
-        let clone=document.importNode(wordT.content,true);
+        var clone=document.importNode(wordT.content,true);
         document.querySelector("#wordContainer").appendChild(clone);        
     }
     
@@ -184,7 +198,7 @@ function fileImport() {
     reader.readAsText(selectedFile);
     reader.onload = function () {
         wordL=this.result.split("\n");
-        for(i=0;i<wordL.length;i++)
+        for(var i=0;i<wordL.length;i++)
             wordL[i]=wordL[i].replace(/(^\s*)|(\s*$)/g, "");
         document.getElementById("begin").max=wordL.length
         document.getElementById("end").max=wordL.length
@@ -193,3 +207,15 @@ function fileImport() {
         document.getElementById("wordList").style.display="";
     }
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("fImportBtn").addEventListener("click",function() {
+        document.getElementById("file").click();
+    });
+    document.getElementById("start").addEventListener("click",function() {
+        initWordList();
+    });
+    document.getElementById("file").addEventListener("change",function() {
+        fileImport();
+    });
+});
