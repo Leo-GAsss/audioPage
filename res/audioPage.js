@@ -193,19 +193,19 @@ function initWordList() {
 }
 
 function fileImport() {
-    var selectedFile = document.getElementById('file').files[0];
-    var reader = new FileReader();
-    reader.readAsText(selectedFile);
-    reader.onload = function () {
-        wordL=this.result.split("\n");
+    var getFile=new XMLHttpRequest;
+    getFile.open("GET","res/WordList.txt",true);
+    getFile.onreadystatechange=function() {
+        wordL=getFile.responseText.split("\n");
         for(var i=0;i<wordL.length;i++)
             wordL[i]=wordL[i].replace(/(^\s*)|(\s*$)/g, "");
         document.getElementById("begin").max=wordL.length
         document.getElementById("end").max=wordL.length
-    
+
         document.getElementById("fileSelect").style.display="none";
         document.getElementById("wordList").style.display="";
     }
+    getFile.send(null);
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -218,4 +218,5 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("file").addEventListener("change",function() {
         fileImport();
     });
+    fileImport();
 });
