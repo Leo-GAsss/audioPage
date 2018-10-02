@@ -30,7 +30,7 @@ table:hover {
 td {
     border: 1px solid #DDDDDD;
     padding: 7px 130px;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 td#deformationList {
