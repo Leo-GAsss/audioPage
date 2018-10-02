@@ -1,4 +1,4 @@
 # AudioPage  
-Designed for automatically pronounce through a word list
+Designed for automatically pronounce a word list
 ### Usage
 [Try it Out](https://leo-gasss.github.io/audioPage/)
