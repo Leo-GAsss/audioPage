@@ -10,9 +10,20 @@
 <body>
     <div id="fileSelect">
         <h1>Choose a word list to begin with&nbsp;&nbsp;: )</h1>
-        <input type="file" id="file" style="display:none" accept=".txt">
-        <div class="div-circle" id="fImportBtn">
-            <img id="fImportIcon" src="res/svg/fileImport.svg" height="35px" />
+        <table cellspacing="0">
+            <tr>
+                <td id="deformationList" class="unclick">
+                    词汇变形
+                </td>
+            </tr>
+            <tr>
+                <td id="middleSchoolCore" class="unclick">
+                    初中核心词汇
+                </td>
+            </tr>
+        </table>
+        <div class="div-circle" id="goBtn">
+            GO
         </div>
     </div>
 
@@ -38,7 +49,7 @@
         <div id="wordContainer">
         </div>
     </div>
-    <div class="div-circle" id="stopButton" style="display: none">
+    <div class="div-circle" id="stopBtn" style="display: none">
         <div id="stopDiv">&nbsp;</div>
     </div>
     

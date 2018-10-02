@@ -126,7 +126,7 @@ function autoStart(id) {
     tgtAudio.parentElement.className="word js-item-hover";
     nowPlay=tgtAudio.parentElement;
     if(tgtAudio.parentElement!=wordContainer[wordContainer.length-1]) {
-        var stopBtn=document.getElementById("stopButton");
+        var stopBtn=document.getElementById("stopBtn");
         stopBtn.style.display="";
         stopBtn.addEventListener("click",function() {
             stopFlag=false;
@@ -192,9 +192,10 @@ function initWordList() {
     }
 }
 
-function fileImport() {
+function fileImport(listName) {
+    listName=listName+".txt";
     var getFile=new XMLHttpRequest;
-    getFile.open("GET","res/WordList.txt",true);
+    getFile.open("GET","res/wordList/"+listName,true);
     getFile.onreadystatechange=function() {
         wordL=getFile.responseText.split("\n");
         for(var i=0;i<wordL.length;i++)
@@ -208,15 +209,46 @@ function fileImport() {
     getFile.send(null);
 }
 
+function changeClassName(nodeList,cName) {
+    for(var i=0;i<nodeList.length;i++) {
+        nodeList[i].className=cName;
+    }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("fImportBtn").addEventListener("click",function() {
-        document.getElementById("file").click();
-    });
+    var selected=null;
+    var optionList=document.getElementsByTagName("td");
+    for(var i=0;i<optionList.length;i++) {    
+        optionList[i].addEventListener("click",function(){
+            if(selected==null) {
+                selected=this;
+                changeClassName(optionList,"");
+                this.className="selected";
+            }
+            else if(selected==this) {
+                this.className="";
+                selected=null;
+                changeClassName(optionList,"unclick");
+            }
+            else {
+                changeClassName(optionList,"");
+                selected=this;
+                this.className="selected";
+            }
+        });
+    }
+    
     document.getElementById("start").addEventListener("click",function() {
         initWordList();
     });
-    document.getElementById("file").addEventListener("change",function() {
-        fileImport();
+    
+    document.getElementById("goBtn").addEventListener("click",function() {
+        if(!selected) {
+            alert("Please Choose One!");
+        }
+        else {
+            fileImport(selected.id);
+        }
     });
-    fileImport();
+    
 });
