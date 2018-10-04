@@ -1,0 +1,184 @@
+body {
+    font-family: Microsoft Yahei;
+}
+
+div {
+    margin: auto;
+    text-align: center;
+}
+
+#fileSelect {
+    width: 100%;
+    margin-top: 13vh;
+}
+
+table {
+    width: 95%;
+    font-size: 5.5vw;
+    background-color: #FAFAFA;
+    margin: auto;
+    margin-top: 6vh;
+    border: none;
+    border-collapse: collapse;
+    cursor: pointer;
+    box-shadow: 0rem 0rem 2rem #DDDDDD;
+    transition: all 0.3s ease-in-out;
+}
+
+td {
+    border: 0.05rem solid #DDDDDD;
+    padding: 1.1vh 0;
+    transition: all 0.3s ease-in-out;
+}
+
+td#deformationList {
+    padding-top: 1.6vh;
+    border-width: 0rem 0rem 0.05rem 0rem;
+}
+
+td#middleSchoolCore {
+    padding-bottom: 1.6vh;
+    border-width: 0;
+}
+
+h1 {
+    font-size: 5.5vw;
+    font-weight: normal;
+    color: #606060;
+}
+
+td.selected,td.unclick:hover {
+    background-color: #45c6ff;
+    color: white;
+}
+
+#goBtn {
+    width: 13vw;
+    height: 13vw;
+    border-radius: 50%;
+    border: 0.7vw solid #45c6ff;
+    color: #45c6ff;
+    font-weight: bold;
+    font-size: 4.5vw;
+    margin: auto;
+    margin-top: 5vh;
+    line-height: 13vw;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#goBtn:hover {
+    background: #45c6ff;
+    color: white;
+}
+
+#stopBtn {
+    border-radius: 50%;
+    background-color: #F8F8F8;
+    box-shadow: 0 0 10vw 1vw #AAAAAA;
+    cursor: pointer;
+    position: fixed;
+    right: 10vw;
+    bottom: 15vw;
+    top: 0px;
+    margin: 0px;
+    margin-top: auto;
+    width: 12vw;
+    height: 12vw;
+    transition: all 0.5s ease-in-out;
+}
+
+#stopDiv {
+    width: 4.5vw;
+    height: 4.5vw;
+    border-radius: 13%;
+    background-color: #484848;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+div.pannelHead {
+    width: 100%;
+    font-size: 5vw;
+    font-weight: normal;
+    color: #606060;
+    margin-top: 3vw;
+}
+
+div.pannel {
+    margin: 3vw;
+}
+
+input.numInput {
+    border-width: 0 0 0.125rem 0;
+    border-color: #DDDDDD;
+    text-align: center;
+    outline: none;
+    transition: all 0.4s ease-in-out;
+    width: 13vw;
+    font-size: 5vw;
+    color: #606060;
+}
+
+input.numInput:focus {
+    border-color: deepskyblue;
+}
+
+a#start {
+    background-color: deepskyblue;
+    color: white;
+    padding: 1vw 3vw;
+    box-shadow: 0px 0.125rem 0.4375rem #CCCCCC;
+    font-size: 5vw;
+    cursor: pointer;
+    margin-left: 1.5vw;
+    transition: all 0.1s ease-in-out;
+}
+
+a#start:hover {
+    box-shadow: 0px 0.25rem 1rem 0.15rem #CCCCCC;
+}
+
+div.word {
+    width: 90%;
+    margin: auto;
+    background-color: #F9F9F9;
+    box-shadow: 0px 0px 0.625rem #CCCCCC;
+    padding: 1.5vw;
+    font-size: 5.5vw;
+    color: #505050;
+    margin-top: 2.4vw;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+}
+
+div.js-item-hover {
+    background-color: #d0d0d0;
+    transition: all 0.5s ease-in-out;
+}
+
+span.wordText {
+    float: left;
+    padding-left: 5vw;
+}
+
+span.buttons {
+    padding-right: 5vw;
+    float: right;
+}
+
+img.Button {
+    vertical-align: middle;
+    padding: 0px 1.2vw;
+    cursor: pointer;
+}
+
+div#wordContainer {
+    margin-top: 3vh;
+}
