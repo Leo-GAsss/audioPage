@@ -5,10 +5,13 @@ Designed for automatically pronounce a word list
 [Try it Out](https://leo-gasss.github.io/audioPage/)  
 
 ### TODO  
-- [ ] Mobile Site  
-- [ ] Style Improve *(e.g. fallback font)* 
+- [x] Mobile Site  
+- [x] Style Improve *(e.g. fallback font)* 
 
 ### Change Log  
+- *2018-10-04*  
+    - *Update:* Adaptive Web Layout  
+    - *Fix:* Use HTTPS Audio Source  
 - *2018-10-02*  
     - *Update:* Now Support Multi-WordList  
 - *2018-10-01*  
