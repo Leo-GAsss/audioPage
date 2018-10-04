@@ -170,10 +170,14 @@ span.buttons {
 }
 
 img.Button {
-    height: 6vw;
+    height: 5.7vw;
     vertical-align: middle;
     padding: 0px 1.2vw;
     cursor: pointer;
+}
+
+img.Button.down {
+    height: 6.555vw;
 }
 
 div#wordContainer {
