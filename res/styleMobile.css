@@ -5,7 +5,7 @@ div {
 
 #fileSelect {
     width: 100%;
-    margin-top: 13vh;
+    margin-top: 22vw;
 }
 
 table {
@@ -13,7 +13,7 @@ table {
     font-size: 5.5vw;
     background-color: #FAFAFA;
     margin: auto;
-    margin-top: 6vh;
+    margin-top: 12vw;
     border: none;
     border-collapse: collapse;
     cursor: pointer;
@@ -23,17 +23,17 @@ table {
 
 td {
     border: 0.05rem solid #DDDDDD;
-    padding: 1.1vh 0;
+    padding: 2.2vw 0;
     transition: all 0.3s ease-in-out;
 }
 
 td#deformationList {
-    padding-top: 1.6vh;
+    padding-top: 3.2vw;
     border-width: 0rem 0rem 0.05rem 0rem;
 }
 
 td#middleSchoolCore {
-    padding-bottom: 1.6vh;
+    padding-bottom: 3.2vw;
     border-width: 0;
 }
 
@@ -57,7 +57,7 @@ td.selected,td.unclick:hover {
     font-weight: bold;
     font-size: 4.5vw;
     margin: auto;
-    margin-top: 5vh;
+    margin-top: 8vw;
     line-height: 13vw;
     vertical-align: middle;
     text-align: center;
@@ -170,11 +170,12 @@ span.buttons {
 }
 
 img.Button {
+    height: 6vw;
     vertical-align: middle;
     padding: 0px 1.2vw;
     cursor: pointer;
 }
 
 div#wordContainer {
-    margin-top: 3vh;
+    margin-top: 6vw;
 }
