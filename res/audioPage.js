@@ -101,7 +101,7 @@ function autoContinue(curElem) {
             function() {
                 scrollWord(nextAudio.parentElement);
                 curElem.parentElement.className="word";
-                nextAudio.parentElement.className="word js-item-hover";
+                nextAudio.parentElement.className="js-item-hover word";
                 nowPlay=nextAudio.parentElement;
                 loopAudioPlay(nextAudio,times,nextAudio.duration*1000*delay,autoContinue);
             },
@@ -157,7 +157,7 @@ function initWordList() {
         
         var wordAudio=wordT.content.querySelector("audio");
         wordAudio.id="Audio"+i.toString();
-        wordAudio.src="http://dict.youdao.com/dictvoice?audio="+wordL[i];
+        wordAudio.src="https://dict.youdao.com/dictvoice?audio="+wordL[i];
         
         var buttonPlay=wordT.content.querySelector(".Button.play");
         buttonPlay.id="Play"+i.toString();
