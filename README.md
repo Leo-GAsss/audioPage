@@ -7,16 +7,22 @@ Designed for automatically pronounce a word list
 ### TODO  
 - [x] Mobile Site  
 - [x] Style Improve *(e.g. fallback font)* 
+- [x] General Go Back
 
 ### Change Log  
+- *2018-10-05*  
+    - *New:* Now Support General Go Back  
+    - *Improve:* Refactoring Scripts and Style Sheets  
+    - *Improve:* Common Web Fonts  
+	- *Fix:* Disable Touch Highlight In Mobile Browser  
 - *2018-10-04*  
-    - *Update:* Adaptive Web Layout  
+    - *Improve:* Adaptive Web Layout  
     - *Fix:* Use HTTPS Audio Source  
 - *2018-10-02*  
-    - *Update:* Now Support Multi-WordList  
+    - *New:* Now Support Multi-WordList  
 - *2018-10-01*  
-    - *Update:* Automatically GET WordList from Server  
+    - *Improve:* Automatically GET WordList from Server  
 - *2018-10-01*  
-    - *Update:* Strict Lock for Audio Play  
+    - *New:* Strict Lock for Audio Play  
 - *2018-10-01*  
     - *Initial Commit:* Local Version   
