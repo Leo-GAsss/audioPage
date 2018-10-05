@@ -1,0 +1,68 @@
+@import url(commonMobile.css);
+
+h1 {
+    font-size: 5.5vw;
+    font-weight: normal;
+    color: #606060;
+}
+
+#fileSelect {
+    width: 100%;
+    margin-top: 22vw;
+}
+
+table {
+    width: 95%;
+    font-size: 5.5vw;
+    background-color: #FAFAFA;
+    margin: auto;
+    margin-top: 12vw;
+    border: none;
+    border-collapse: collapse;
+    cursor: pointer;
+    box-shadow: 0rem 0rem 2rem #DDDDDD;
+    transition: all 0.3s ease-in-out;
+}
+
+td {
+    border: 0.05rem solid #DDDDDD;
+    padding: 2.2vw 0;
+    transition: all 0.3s ease-in-out;
+}
+
+td#deformationList {
+    padding-top: 3.2vw;
+    border-width: 0rem 0rem 0.05rem 0rem;
+}
+
+td#middleSchoolCore {
+    padding-bottom: 3.2vw;
+    border-width: 0;
+}
+
+td.selected{
+    background-color: #45c6ff;
+    color: white;
+}
+
+#goBtn {
+    width: 13vw;
+    height: 13vw;
+    border-radius: 50%;
+    border: 0.7vw solid #45c6ff;
+    color: #45c6ff;
+    font-weight: bold;
+    font-size: 4.5vw;
+    margin: auto;
+    margin-top: 8vw;
+    line-height: 13vw;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#goBtn:{
+    background: #45c6ff;
+    color: white;
+}

@@ -1,8 +1,9 @@
 /*eslint-env browser*/
+
 var wordL=[];
 var stopFlag=true;
 var playFlag=true;
-var nowPlay;
+var nowPlay=null;
 var Position={};
 
 (function () {
@@ -37,6 +38,14 @@ var Position={};
         return Viewport;
     }
 })();
+
+function getQueryString(name) {
+    var result = window.location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
+    if (result == null || result.length < 1) {
+        return "";
+    }
+    return result[1];
+}
 
 function scrollWord(elem) {
     var rect=elem.getBoundingClientRect();
@@ -197,58 +206,33 @@ function fileImport(listName) {
     var getFile=new XMLHttpRequest;
     getFile.open("GET","res/wordList/"+listName,true);
     getFile.onreadystatechange=function() {
-        wordL=getFile.responseText.split("\n");
-        for(var i=0;i<wordL.length;i++)
-            wordL[i]=wordL[i].replace(/(^\s*)|(\s*$)/g, "");
-        document.getElementById("begin").max=wordL.length
-        document.getElementById("end").max=wordL.length
-
-        document.getElementById("fileSelect").style.display="none";
-        document.getElementById("wordList").style.display="";
-    }
+        if (getFile.readyState==4 && getFile.status==200) {
+            wordL=getFile.responseText.split("\n");
+            for(var i=0;i<wordL.length;i++)
+                wordL[i]=wordL[i].replace(/(^\s*)|(\s*$)/g, "");
+            document.getElementById("begin").max=wordL.length
+            document.getElementById("end").max=wordL.length
+            document.getElementById("wordList").style.display="";
+        }
+        else if (getFile.readyState==4 && getFile.status==404) {
+            alert("Invalid Word List!");
+            window.location.href="index.html";
+        }
+    };
     getFile.send(null);
 }
 
-function changeClassName(nodeList,cName) {
-    for(var i=0;i<nodeList.length;i++) {
-        nodeList[i].className=cName;
+document.addEventListener("DOMContentLoaded", function() {    
+    var selectedWordList=getQueryString("wordList");
+    if(selectedWordList) {
+        fileImport(selectedWordList);
     }
-}
-
-document.addEventListener("DOMContentLoaded", function() {
-    var selected=null;
-    var optionList=document.getElementsByTagName("td");
-    for(var i=0;i<optionList.length;i++) {    
-        optionList[i].addEventListener("click",function(){
-            if(selected==null) {
-                selected=this;
-                changeClassName(optionList,"");
-                this.className="selected";
-            }
-            else if(selected==this) {
-                this.className="";
-                selected=null;
-                changeClassName(optionList,"unclick");
-            }
-            else {
-                changeClassName(optionList,"");
-                selected=this;
-                this.className="selected";
-            }
-        });
+    else {
+        alert("Please Select One First!");
+        window.location.href="index.html";
+        return;
     }
-    
     document.getElementById("start").addEventListener("click",function() {
         initWordList();
     });
-    
-    document.getElementById("goBtn").addEventListener("click",function() {
-        if(!selected) {
-            alert("Please Choose One!");
-        }
-        else {
-            fileImport(selected.id);
-        }
-    });
-    
 });

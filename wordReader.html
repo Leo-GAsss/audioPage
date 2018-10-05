@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <link href="res/style/wordReader.css" rel="stylesheet" media="only screen and (min-width:768px)" type="text/css" />
+    <link href="res/style/wordReaderMobile.css" rel="stylesheet" media="only screen and (max-width:767px)" type="text/css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>audioPage</title>
+</head>
+    
+<body>
+
+    <div id="wordList" style="display: none">
+        <div class="pannelHead">
+            <div class="pannel">
+                Repeat&nbsp;
+                <input type="text" class="numInput" id="rptTimes" value="2" />
+                &nbsp;times,&nbsp;
+                Delay
+                <input type="text" class="numInput" id="delay" value="0.8" />
+            </div>
+            <div class="pannel">
+                From word&nbsp;
+                <input type="text" class="numInput" id="begin" value="1" />
+                &nbsp;to&nbsp;
+                <input type="text" class="numInput" id="end" value="100" />
+                <a id="start">Start</a>            
+            </div>
+        </div>    
+            
+        <div id="wordContainer">
+        </div>
+    </div>
+    <div class="div-circle" id="stopBtn" style="display: none">
+        <div id="stopDiv">&nbsp;</div>
+    </div>
+    
+    <template id="wordRow">
+        <div class="word">
+            <span class="wordText">Analysis</span>
+            <audio></audio>
+            <span class="buttons">
+                <img class="Button play" src="res/svg/playButton.svg" />
+                <img class="Button loop" src="res/svg/loopButton.svg" />
+                <img class="Button down" src="res/svg/downButton.svg" />
+            </span>
+        </div>
+    </template>
+    
+    <script src="res/script/wordReader.js"></script>
+    
+</body>
+    
+</html>
