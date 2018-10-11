@@ -1,13 +1,12 @@
 /*eslint-env browser*/
 
-var wordL=[];
-var stopFlag=true;
-var playFlag=true;
-var nowPlay=null;
-var Position={};
+window.wordL=[];
+window.stopFlag=false;
+window.playFlag=true;
+window.Position={};
 
 (function () {
-    Position.getAbsolute = function (reference, target) {
+    window.Position.getAbsolute = function (reference, target) {
         var result = {
             left: -target.clientLeft,
             top: -target.clientTop
@@ -27,7 +26,7 @@ var Position={};
         }
         return result;
     }
-    Position.getViewport = function (target) {
+    window.Position.getViewport = function (target) {
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
         var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft;
         var absolutePosi = this.getAbsolute(document, target);
@@ -53,33 +52,42 @@ function scrollWord(elem) {
     window.scrollTo(0,absoluteElementTop-8-41*3);
 }
 
-function loopAudioPlay(elem,maxTimes,delayTime,finalEndEvent){
-    if(!playFlag) {
-        return ;
-    }
-    playFlag=false;
-    elem.play();
-    var start = 0;
-    elem.addEventListener("ended",function() {
-        if(!stopFlag) {
-            elem.parentElement.className="word";
-            stopFlag=true;
-            playFlag=true;
+function genEndEvent(maxTimes,delayTime,finalEndEvent) {
+    var start=0;
+    function endEvent() {
+        if(window.stopFlag) {
+            this.parentElement.className="word";
+            window.stopFlag=false;
+            window.playFlag=true;
             return;
         }
         start++;
-        if( start<maxTimes ) {
-            setTimeout(function(){elem.play();},delayTime);
+        if(start<maxTimes) {
+            setTimeout(function(elem) {
+                return function() {
+                    elem.play();
+                }
+            }(this),delayTime);
         }
         else {
-            elem.pause();
-            elem.onended=null;
-            playFlag=true;
+            this.pause();
+            this.removeEventListener("ended",endEvent);
+            window.playFlag=true;
             if(finalEndEvent) {
-                finalEndEvent(elem);
+                finalEndEvent(this);
             }
         }
-    });
+    }
+    return endEvent;
+}
+
+function loopAudioPlay(elem,maxTimes,delayTime,finalEndEvent){
+    if(!window.playFlag) {
+        return ;
+    }
+    window.playFlag=false;
+    elem.play();
+    elem.addEventListener("ended",genEndEvent(maxTimes,delayTime,finalEndEvent));
 }
 
 function playOnce(id) {
@@ -95,9 +103,9 @@ function playLoop(id) {
 }
 
 function autoContinue(curElem) {
-    if(!stopFlag) {
+    if(window.stopFlag) {
         curElem.parentElement.className="word";
-        stopFlag=true;
+        window.stopFlag=false;
         return;
     }
     
@@ -111,19 +119,31 @@ function autoContinue(curElem) {
                 scrollWord(nextAudio.parentElement);
                 curElem.parentElement.className="word";
                 nextAudio.parentElement.className="js-item-hover word";
-                nowPlay=nextAudio.parentElement;
                 loopAudioPlay(nextAudio,times,nextAudio.duration*1000*delay,autoContinue);
             },
             curElem.duration*1000*delay+100
         );
     }
     else {
-        loopAudioPlay(nextAudio,times,nextAudio.duration*1000*delay,null);
+        setTimeout(
+            function() {
+                curElem.parentElement.className="word";
+                nextAudio.parentElement.className="js-item-hover word";
+                loopAudioPlay(nextAudio,times,nextAudio.duration*1000*delay,function(lastElem) {
+                    lastElem.parentElement.className="word";
+                    var stopBtn=document.getElementById("stopBtn");
+                    stopBtn.style.display="none";
+                    window.stopFlag=false;
+                    window.playFlag=true;
+                });
+            },
+            curElem.duration*1000*delay+100
+        );
     }
 }
 
 function autoStart(id) {
-    if(!playFlag) {
+    if(!window.playFlag) {
         return ;
     }
     id=id.slice(4);
@@ -133,12 +153,11 @@ function autoStart(id) {
     var times=Number(document.getElementById("rptTimes").value);
     scrollWord(tgtAudio.parentElement);
     tgtAudio.parentElement.className="word js-item-hover";
-    nowPlay=tgtAudio.parentElement;
     if(tgtAudio.parentElement!=wordContainer[wordContainer.length-1]) {
         var stopBtn=document.getElementById("stopBtn");
         stopBtn.style.display="";
         stopBtn.addEventListener("click",function() {
-            stopFlag=false;
+            window.stopFlag=true;
             this.style.display="none";
         });
         
@@ -162,11 +181,11 @@ function initWordList() {
         var wordT=document.querySelector("#wordRow");
         
         var wordText=wordT.content.querySelector(".wordText");
-        wordText.innerHTML=wordL[i].slice(0,1).toUpperCase()+wordL[i].slice(1);
+        wordText.innerHTML=window.wordL[i].slice(0,1).toUpperCase()+window.wordL[i].slice(1);
         
         var wordAudio=wordT.content.querySelector("audio");
         wordAudio.id="Audio"+i.toString();
-        wordAudio.src="https://dict.youdao.com/dictvoice?audio="+wordL[i];
+        wordAudio.src="https://dict.youdao.com/dictvoice?audio="+window.wordL[i];
         
         var buttonPlay=wordT.content.querySelector(".Button.play");
         buttonPlay.id="Play"+i.toString();
@@ -207,11 +226,11 @@ function fileImport(listName) {
     getFile.open("GET","res/wordList/"+listName,true);
     getFile.onreadystatechange=function() {
         if (getFile.readyState==4 && getFile.status==200) {
-            wordL=getFile.responseText.split("\n");
-            for(var i=0;i<wordL.length;i++)
-                wordL[i]=wordL[i].replace(/(^\s*)|(\s*$)/g, "");
-            document.getElementById("begin").max=wordL.length
-            document.getElementById("end").max=wordL.length
+            window.wordL=getFile.responseText.split("\n");
+            for(var i=0;i<window.wordL.length;i++)
+                window.wordL[i]=window.wordL[i].replace(/(^\s*)|(\s*$)/g, "");
+            document.getElementById("begin").max=window.wordL.length
+            document.getElementById("end").max=window.wordL.length
             document.getElementById("wordList").style.display="";
         }
         else if (getFile.readyState==4 && getFile.status==404) {

@@ -21,6 +21,8 @@ input.numInput {
     width: 13vw;
     font-size: 5vw;
     color: #606060;
+    -webkit-appearance: none;
+    border-radius: 0;
 }
 
 input.numInput:focus {
